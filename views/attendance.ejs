@@ -1,0 +1,92 @@
+<%- include("partials/header") %>
+
+  <!-- Features -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class="card">
+          <div class="card-body colored-section">
+
+            <!-- Makes POST request to /login route -->
+            <form id="attendMeeting" action="/attendMeeting" method="POST">
+              <div class="form-group">
+                <label for="meetingCode">Join Meeting</label>
+                <input class="form-control" name="meetingCode"
+                  placeholder="Enter 4 digit meeting code" type="tel" pattern="[0-9]{4}">
+                <input type="hidden" name="userId" value="<%= user._id %>"></input>
+              </div>
+              <button type="submit" class="btn btn-light">Join</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class="card">
+          <div class="card-body">
+
+            <!-- Makes POST request to /login route -->
+            <form id="hostMeeting" action="/hostMeeting" method="POST">
+              <div class="form-group">
+                <label for="meetingDescription">Host Meeting</label>
+                <input class="form-control" name="meetingDescription"
+                  placeholder="Meeting Description">
+                <input type="hidden" name="userId" value="<%= user._id %>"></input>
+              </div>
+              <button type="submit" class="btn btn-dark">Host Meeting</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
+
+<br />
+<h2>Meetings Attended</h2>
+  <% attendedMeetings.forEach(function(meeting) { %>
+    <li class="list-group-item list-group-item-action">
+      <form class="" action="/deleteAttendedMeeting" method="post">
+        <span class="name"><%= meeting.title %></span>
+        <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
+            name="meetingCode" value=<%= meeting.code %> > Delete
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </form>
+  <% }); %>
+
+<br />
+<h2>Meetings Hosted</h2>
+<div class="list-group">
+  <% hostedMeetings.forEach(function(meeting) { %>
+    <button type="button" class="list-group-item list-group-item-action"><%= meeting.title %>: <%= meeting.code %></button>
+  <% }) %>
+</div>
+
+
+  <!-- Footer -->
+
+  <footer id="footer" class="white-section">
+    <div class="container-fluid">
+      <i class="fab fa-twitter contact-icon"></i>
+      <i class="fab fa-facebook contact-icon"></i>
+      <i class="fab fa-instagram contact-icon"></i>
+      <i class="fas fa-envelope contact-icon"></i>
+      <p class="copyright">© Copyright 2019 Attending</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="scripts/script.js"></script>
+
+
+<%- include("partials/footer") %>

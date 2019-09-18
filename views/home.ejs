@@ -1,0 +1,104 @@
+<%- include("partials/header") %>
+
+
+  <section id="title" class="colored-section">
+    <div class="container-fluid">
+      <!-- Nav Bar -->
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="">Attending</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#footer">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+
+      <!-- Title -->
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <h1 class="big-heading">Make attendance a breeze.</h1>
+          <a class="btn btn-dark btn-lg auth-button" role="button" href="/login">Login</a>
+          <a class="btn btn-outline-light btn-lg auth-button" role="button" href="/register">Register</a>
+        </div>
+        <div class="col-lg-6">
+          <img class="title-image" src="images/iphone6.png" alt="iphone-mockup">
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Features -->
+
+  <section id="features" class="white-section">
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-lg-4 feature">
+          <i class="fas fa-check-circle fa-4x feature-icon"></i>
+          <h3 class="feature-title">Easy for hosts.</h3>
+          <p>Create a meeting code in a snap.</p>
+        </div>
+
+        <div class="col-lg-4 feature">
+          <i class="fas fa-bullseye fa-4x feature-icon"></i>
+          <h3 class="feature-title">Easy for attendees.</h3>
+          <p>Type in the meeting code to log your attendance.</p>
+        </div>
+
+        <div class="col-lg-4 feature">
+          <i class="fas fa-heart fa-4x feature-icon"></i>
+          <h3 class="feature-title">Get desired data.</h3>
+          <p>Get attendee contact info as needed.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- Call to Action -->
+
+  <section id="cta" class="colored-section">
+    <div class="container-fluid">
+
+      <h3 class="big-heading">Try Attending Today.</h3>
+      <a class="btn btn-dark btn-lg auth-button" role="button" href="/login">Login</a>
+      <a class="btn btn-outline-light btn-lg auth-button" role="button" href="/register">Register</a>
+    </div>
+
+  </section>
+
+
+  <!-- Footer -->
+
+  <footer id="footer" class="white-section">
+    <div class="container-fluid">
+      <i class="fab fa-twitter contact-icon"></i>
+      <i class="fab fa-facebook contact-icon"></i>
+      <i class="fab fa-instagram contact-icon"></i>
+      <i class="fas fa-envelope contact-icon"></i>
+      <p class="copyright">© Copyright 2019 Attending</p>
+    </div>
+  </footer>
+
+
+
+<%- include("partials/footer") %>

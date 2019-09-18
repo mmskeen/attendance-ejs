@@ -1,0 +1,171 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+/* Headings */
+.big-heading {
+  font-size: 3.5rem;
+  line-height: 1.5;
+}
+
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+/* Containers */
+
+.container-fluid {
+  padding: 7% 15%;
+}
+
+/* Sections  */
+
+.colored-section {
+  color: #fff;
+  background-color: #3d84a8;/* #ff4c68; */
+}
+
+.white-section {
+  background-color: #fff;
+}
+
+/* Navigation Bar */
+
+.navbar {
+  padding: 0 0 4.5rem;
+}
+
+.navbar-brand {
+  font-family: "Ubuntu";
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.nav-item {
+  padding: 0 18px;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  font-family: "Montserrat";
+  font-weight: 100;
+}
+
+/* Title Section */
+
+#title .container-fluid {
+  padding: 3% 15% 7%;
+  text-align: left;
+}
+
+.title-image {
+  transform: rotate(25deg);
+  width: 60%;
+  position: absolute;
+  right: 30%;
+}
+
+/* Download Buttons */
+
+.auth-button {
+  margin: 5% 3% 5% 0;
+}
+
+/* Features */
+
+#features {
+  background-color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+}
+
+.feature {
+  padding: 5%;
+}
+
+p {
+  color: #8f8f8f;
+}
+
+.feature-icon {
+  color: #46cdcf;/* #ef8172; #46cdcf */
+  margin-bottom: 1rem;
+}
+
+.feature-icon:hover {
+  color: #ff4c68;
+}
+
+/* Testimonial Section */
+
+#testimonials {
+  background-color: #ef8172;
+}
+
+.testimonial-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.testimonial-image {
+  width: 10%;
+  border-radius: 100%;
+  margin: 20px;
+}
+
+#press {
+  background-color: #ef8172;
+  padding-bottom: 3%;
+}
+
+.press-logo {
+  width: 15%;
+  margin: 20px 20px 50px;
+}
+
+/* Pricing Section */
+
+#pricing {
+  padding: 100px;
+}
+
+.price-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.pricing-column {
+  padding: 2% 5%;
+}
+
+@media (max-width: 1028px) {
+  #title {
+    text-align: center;
+  }
+  .title-image {
+    position: static;
+    transform: rotate(0);
+  }
+}
+
+/* Call to Action */
+
+/* Footer */
+
+.copyright {
+  margin-top: 1rem;
+}
+
+.contact-icon {
+  margin: 1%
+}
