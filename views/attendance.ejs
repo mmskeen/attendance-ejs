@@ -1,4 +1,5 @@
 <%- include("partials/header") %>
+<%- include("partials/navbar-loggedIn") %>
 
   <!-- Features -->
   <div class="container mt-5">
@@ -55,20 +56,31 @@
 <h2>Meetings Attended</h2>
   <% attendedMeetings.forEach(function(meeting) { %>
     <li class="list-group-item list-group-item-action">
-      <form class="" action="/deleteAttendedMeeting" method="post">
+      <form class="" action="/deleteAttendedMeeting" method="post"
+        onsubmit="return confirm('Delete attendance at meeting?');">
         <span class="name"><%= meeting.title %></span>
         <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
             name="meetingCode" value=<%= meeting.code %> > Delete
           <span class="glyphicon glyphicon-remove"></span>
         </button>
       </form>
+    </li>
   <% }); %>
 
 <br />
 <h2>Meetings Hosted</h2>
 <div class="list-group">
   <% hostedMeetings.forEach(function(meeting) { %>
-    <button type="button" class="list-group-item list-group-item-action"><%= meeting.title %>: <%= meeting.code %></button>
+    <li class="list-group-item list-group-item-action">
+      <form class="" action="/deleteHostedMeeting" method="post"
+        onsubmit="return confirm('Delete hosted meeting?');">
+        <span class="name"><%= meeting.title %>: <%= meeting.code %></span>
+        <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
+            name="meetingId" value=<%= meeting._id %> > Delete
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </form>
+    </li>
   <% }) %>
 </div>
 

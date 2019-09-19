@@ -207,6 +207,23 @@ app.post("/deleteAttendedMeeting", function(req, res) {
   );
 });
 
+app.post("/deleteHostedMeeting", function(req, res) {
+  console.log(req.body);
+  request.delete(
+    {
+      url: "http://localhost:3001/meetings/" + req.body.meetingId,
+    },
+    function(err, httpResponse, body) {
+      if (err) {
+        res.json({ success: false, error: err });
+      } else {
+        console.log(body);
+        res.redirect("/attendance");
+      }
+    }
+  );
+});
+
 app.post("/register", function(req, res) {
   User.register({username: req.body.username}, req.body.password, function(err, result) {
     if (err) {
@@ -235,6 +252,11 @@ app.post("/login", function(req, res) {
       });
     }
   });
+});
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 app.post("/attendedMeetings", function(req, res) {

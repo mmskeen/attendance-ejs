@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Navigation Bar */
 
 .navbar {
-  padding: 0 0 4.5rem;
+  padding: 0 0 2.5rem; /* was 4.5 */
 }
 
 .navbar-brand {
