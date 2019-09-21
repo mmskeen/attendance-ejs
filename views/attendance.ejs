@@ -1,5 +1,6 @@
 <%- include("partials/header") %>
 <%- include("partials/navbar-loggedIn") %>
+<body id="attendance">
 
   <!-- Features -->
   <div class="container mt-5">
@@ -9,7 +10,7 @@
         <div class="card">
           <div class="card-body colored-section">
 
-            <!-- Makes POST request to /login route -->
+            <!-- Makes POST request to /attendMeeting route -->
             <form id="attendMeeting" action="/attendMeeting" method="POST">
               <div class="form-group">
                 <label for="meetingCode">Join Meeting</label>
@@ -34,7 +35,7 @@
         <div class="card">
           <div class="card-body">
 
-            <!-- Makes POST request to /login route -->
+            <!-- Makes POST request to /hostMeeting route -->
             <form id="hostMeeting" action="/hostMeeting" method="POST">
               <div class="form-group">
                 <label for="meetingDescription">Host Meeting</label>
@@ -74,7 +75,7 @@
     <li class="list-group-item list-group-item-action">
       <form class="" action="/deleteHostedMeeting" method="post"
         onsubmit="return confirm('Delete hosted meeting?');">
-        <span class="name"><%= meeting.title %>: <%= meeting.code %></span>
+        <a class="name" href=<%= "/meeting?id=" + meeting._id %> ><%= meeting.title %>: <%= meeting.code %></a>
         <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
             name="meetingId" value=<%= meeting._id %> > Delete
           <span class="glyphicon glyphicon-remove"></span>

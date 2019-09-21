@@ -1,10 +1,37 @@
 body {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
+  line-height: 1.5;
+  color: #566b78; /* #555; */
 }
 
-h1, h2, h3, h4, h5, h6 {
+#attendance, #meetingDetails {
+  margin: 0 auto;
+  max-width: 50em;
+  padding: 2em 0.5em;
+}
+
+h1, h2, h3, h4, h5, h6, strong {
+  color: #333;
   font-weight: bold;
+}
+
+#meetingDetails h4 {
+  color: #3d84a8;
+}
+
+h2 {
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+}
+
+h3 {
+  margin-top: 0.3em;
+  padding-top: 0.3em;
+}
+
+a {
+  color: #e81c4f;
 }
 
 /* Headings */

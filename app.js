@@ -122,14 +122,14 @@ app.get("/attendance", function(req, res) {
   if (req.isAuthenticated()) {
     console.log(req.user._id);
     request("http://localhost:3001/users/" + req.user._id + "/meetingsAttended", function (error, response, body) {
-      console.log('error:', error); // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log('body:', body); // Print the HTML for the Google homepage.
+      console.log('error: ', error); // Print the error if one occurred
+      console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
+      console.log('body: ', body); // Print the HTML for the attended meetings response.
       const attendedMeetings = JSON.parse(body);
       request("http://localhost:3001/users/" + req.user._id + "/meetingsHosted", function (error2, response2, body2) {
-        console.log('error2:', error2); // Print the error if one occurred
-        console.log('statusCode2:', response2 && response2.statusCode); // Print the response status code if a response was received
-        console.log('body2:', body2); // Print the HTML for the Google homepage.
+        console.log('error2: ', error2); // Print the error if one occurred
+        console.log('statusCode2: ', response2 && response2.statusCode); // Print the response status code if a response was received
+        console.log('body2: ', body2); // Print the HTML for the Google homepage.
         const hostedMeetings = JSON.parse(body2);
 
         res.render("attendance", {user: req.user, attendedMeetings: attendedMeetings, hostedMeetings: hostedMeetings});
@@ -139,6 +139,23 @@ app.get("/attendance", function(req, res) {
     res.redirect("/login");
   }
 });
+
+app.get("/meeting", function(req, res) {
+  if (req.isAuthenticated()) {
+    console.log();
+    request("http://localhost:3001/meetings/" + req.query.id, function(error, response, body) {
+      console.log('error: ', error); // Print the error if one occurred
+      console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
+      console.log('body: ', body); // Print the HTML for the attendees response.
+      const meetingData = JSON.parse(body);
+      // res.send(meetingData);
+      res.render("meetingDetails", {meetingData: meetingData});
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
 
 app.post("/hostMeeting", function(req, res) {
   console.log(req.user);
