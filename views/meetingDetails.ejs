@@ -1,0 +1,28 @@
+<%- include("partials/header") %>
+<%- include("partials/navbar-loggedIn") %>
+<body id="meetingDetails">
+
+<h5>Meeting Details</h5>
+<h2><%= "Title: " + meetingData.title %></h3>
+<h4><%= "Code: " + meetingData.code %></h3>
+<h4><%= "Host: " + meetingData.host.username %></h3>
+<br />
+<h3>Attendees</h3>
+<div class="list-group">
+  <% meetingData.attendees.forEach(function(attendee) { %>
+    <li class="list-group-item list-group-item-action">
+      <form class="" action="/deleteAttendedMeeting" method="post"
+        onsubmit="return confirm('Delete attendance at meeting?');">
+        <span class="name"><%= attendee.username %></span>
+        <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
+            name="meetingCode" value=<%= meetingData.code %> > Delete
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </form>
+    </li>
+  <% }); %>
+</div>
+
+
+
+<%- include("partials/footer") %>
