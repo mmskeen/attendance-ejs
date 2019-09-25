@@ -156,6 +156,13 @@ app.get("/meeting", function(req, res) {
   }
 });
 
+app.get("/profile", function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render("profile");
+  } else {
+    res.redirect("/login");
+  }
+});
 
 app.post("/hostMeeting", function(req, res) {
   console.log(req.user);
@@ -229,6 +236,34 @@ app.post("/deleteHostedMeeting", function(req, res) {
   request.delete(
     {
       url: "http://localhost:3001/meetings/" + req.body.meetingId,
+    },
+    function(err, httpResponse, body) {
+      if (err) {
+        res.json({ success: false, error: err });
+      } else {
+        console.log(body);
+        res.redirect("/attendance");
+      }
+    }
+  );
+});
+
+app.post("/saveProfile", function(req, res) {
+  const profileData = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    preferredEmail: req.body.preferredEmail,
+    cellPhone: req.body.cellPhone,
+    birthDate: req.body.birthDate,
+    schoolId: req.body.schoolId
+  };
+  console.log(req.body);
+  console.log("Now profile data: ");
+  console.log(profileData);
+  request.patch(
+    {
+      url: "http://localhost:3001/users/" + req.user._id,
+      form: profileData
     },
     function(err, httpResponse, body) {
       if (err) {

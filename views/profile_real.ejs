@@ -1,0 +1,55 @@
+<%- include("partials/header") %>
+<%- include("partials/navbar-loggedIn") %>
+
+<body id="profile">
+
+  <div class="container">
+    <form class="form-horizontal" role="form" action="/saveProfile" method="POST">
+      <h2>Profile</h2>
+      <div class="form-group profile">
+        <label for="firstName" class="col-sm-3 control-label">First Name</label>
+        <div class="col-sm-9">
+          <text name="firstName" value="First Name*" class="form-control" autofocus>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+        <div class="col-sm-9">
+          <text name="lastName" value="Last Name*" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-sm-3 control-label">Preferred Email </label>
+        <p class="col-sm-9">Preferred Email</p>
+      </div>
+      <div class="form-group">
+        <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
+        <div class="col-sm-9">
+          <text name="birthDate" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cellNumber" class="col-sm-3 control-label">Cell number </label>
+        <div class="col-sm-9">
+          <text name="cellPhone" value="Cell number" class="form-control">
+          <span class="help-block">Your cell number won't be disclosed anywhere </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="schoolId" class="col-sm-3 control-label">School ID </label>
+        <div class="col-sm-9">
+          <text name="schoolId" value="1000014343" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-9 col-sm-offset-3">
+          <span class="help-block">*Required fields</span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Edit</button>
+    </form> <!-- /form -->
+  </div> <!-- ./container -->
+
+
+
+  <%- include("partials/footer") %>
