@@ -2,43 +2,51 @@
 <%- include("partials/navbar-loggedIn") %>
 
 <body id="profile">
-
+<% console.log(user); %>
   <div class="container">
     <form class="form-horizontal" role="form" action="/saveProfile" method="POST">
+      <a href="/profile" name="cancel" class="x">X</a>
       <h2>Profile</h2>
       <div class="form-group profile">
         <label for="firstName" class="col-sm-3 control-label">First Name</label>
         <div class="col-sm-9">
-          <text name="firstName" value="First Name*" class="form-control" autofocus>
+          <input type="text" name="firstName" placeholder="First Name*" class="form-control"
+            value="<%= user.firstName %>" autofocus>
         </div>
       </div>
       <div class="form-group">
         <label for="lastName" class="col-sm-3 control-label">Last Name</label>
         <div class="col-sm-9">
-          <text name="lastName" value="Last Name*" class="form-control">
+          <input type="text" name="lastName" placeholder="Last Name*" class="form-control"
+            value="<%= user.lastName %>">
         </div>
       </div>
       <div class="form-group">
         <label for="email" class="col-sm-3 control-label">Preferred Email </label>
-        <p class="col-sm-9">Preferred Email</p>
+        <div class="col-sm-9">
+          <input type="email" name="preferredEmail" placeholder="Preferred Email" class="form-control"
+            value="<%= user.preferredEmail %>">
+        </div>
       </div>
       <div class="form-group">
         <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
         <div class="col-sm-9">
-          <text name="birthDate" class="form-control">
+          <input type="date" name="birthDate" class="form-control" value="<%= user.birthDate %>">
         </div>
       </div>
       <div class="form-group">
         <label for="cellNumber" class="col-sm-3 control-label">Cell number </label>
         <div class="col-sm-9">
-          <text name="cellPhone" value="Cell number" class="form-control">
+          <input type="phoneNumber" name="cellPhone" placeholder="Cell number" class="form-control"
+            value="<%= user.cellPhone  %>">
           <span class="help-block">Your cell number won't be disclosed anywhere </span>
         </div>
       </div>
       <div class="form-group">
         <label for="schoolId" class="col-sm-3 control-label">School ID </label>
         <div class="col-sm-9">
-          <text name="schoolId" value="1000014343" class="form-control">
+          <input type="number" name="schoolId" placeholder="Please write your school ID if applicable"
+            class="form-control" value="<%= user.schoolId %>">
         </div>
       </div>
       <div class="form-group">
@@ -46,7 +54,11 @@
           <span class="help-block">*Required fields</span>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Edit</button>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/profile" name="cancel" class="btn btn-danger">Cancel</a>
+        <button type="reset" value="Reset" class="btn btn-secondary">Reset</button>
+      </div>
     </form> <!-- /form -->
   </div> <!-- ./container -->
 

@@ -9,38 +9,38 @@
       <div class="form-group profile">
         <label for="firstName" class="col-sm-3 control-label">First Name</label>
         <div class="col-sm-9">
-          <input type="text" name="firstName" placeholder="First Name*" class="form-control" autofocus>
+          <p class="col-sm-9"><%= user.firstName %></p>
         </div>
       </div>
       <div class="form-group">
         <label for="lastName" class="col-sm-3 control-label">Last Name</label>
         <div class="col-sm-9">
-          <input type="text" name="lastName" placeholder="Last Name*" class="form-control">
+          <p class="col-sm-9"><%= user.lastName %></p>
         </div>
       </div>
       <div class="form-group">
         <label for="email" class="col-sm-3 control-label">Preferred Email </label>
         <div class="col-sm-9">
-          <input type="email" name="preferredEmail" placeholder="Preferred Email" class="form-control">
+          <p class="col-sm-9"><%= user.preferredEmail %></p>
         </div>
       </div>
       <div class="form-group">
         <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
         <div class="col-sm-9">
-          <input type="date" name="birthDate" class="form-control">
+          <p class="col-sm-9"><%= user.birthDate %></p>
         </div>
       </div>
       <div class="form-group">
         <label for="cellNumber" class="col-sm-3 control-label">Cell number </label>
         <div class="col-sm-9">
-          <input type="phoneNumber" name="cellPhone" placeholder="Cell number" class="form-control">
+          <p class="col-sm-9"><%= user.cellPhone %></p>
           <span class="help-block">Your cell number won't be disclosed anywhere </span>
         </div>
       </div>
       <div class="form-group">
         <label for="schoolId" class="col-sm-3 control-label">School ID </label>
         <div class="col-sm-9">
-          <input type="number" name="schoolId" placeholder="Please write your school ID if applicable" class="form-control">
+          <p class="col-sm-9"><%= user.schoolId %></p>
         </div>
       </div>
       <div class="form-group">
@@ -48,7 +48,7 @@
           <span class="help-block">*Required fields</span>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Save</button>
+      <a href="/profile-edit" class="btn btn-primary btn-block">Edit</a>
     </form> <!-- /form -->
   </div> <!-- ./container -->
 

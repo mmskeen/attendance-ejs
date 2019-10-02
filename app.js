@@ -34,9 +34,16 @@ mongoose.set('useCreateIndex', true);
 
 const userSchema = new mongoose.Schema({
   email: String,
+  username: String,
   password: String,
   googleId: String,
-  facebookId: String
+  facebookId: String,
+  firstName: String,
+  lastName: String,
+  preferredEmail: String,
+  cellPhone: String,
+  birthDate: String,
+  schoolId: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -158,7 +165,15 @@ app.get("/meeting", function(req, res) {
 
 app.get("/profile", function(req, res) {
   if (req.isAuthenticated()) {
-    res.render("profile");
+    res.render("profile", {user: req.user});
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/profile-edit", function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render("profile-edit", {user: req.user});
   } else {
     res.redirect("/login");
   }
@@ -258,6 +273,7 @@ app.post("/saveProfile", function(req, res) {
     schoolId: req.body.schoolId
   };
   console.log(req.body);
+  console.log();
   console.log("Now profile data: ");
   console.log(profileData);
   request.patch(
@@ -270,7 +286,7 @@ app.post("/saveProfile", function(req, res) {
         res.json({ success: false, error: err });
       } else {
         console.log(body);
-        res.redirect("/attendance");
+        res.redirect("/profile");
       }
     }
   );

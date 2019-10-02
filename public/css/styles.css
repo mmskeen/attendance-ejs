@@ -217,6 +217,9 @@ p {
     letter-spacing: 4px;
 }
 
+#profile .form-horizontal {
+  position: relative;
+}
 #profile .form-group {
     display:flex;
 }
@@ -226,4 +229,17 @@ p {
 }
 #profile .form-group input {
   flex: 4;
+}
+#profile .form-group p {
+  flex: 4;
+  text-align: left;
+}
+#profile .form-group a, #profile .form-group button {
+  flex: 1;
+}
+#profile .x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #566b78;
 }
