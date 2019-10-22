@@ -232,7 +232,7 @@ app.post("/deleteAttendedMeeting", function(req, res) {
   };
   request.delete(
     {
-      url: "http://localhost:3001/users/" + req.user._id + "/attendEvent",
+      url: "http://localhost:3001/users/" + req.body.attendeeId + "/attendEvent",
       form: attendData
     },
     function(err, httpResponse, body) {
@@ -240,7 +240,7 @@ app.post("/deleteAttendedMeeting", function(req, res) {
         res.json({ success: false, error: err });
       } else {
         console.log(body);
-        res.redirect("/attendance");
+        res.redirect("back"); // returns to the page from which route is accessed
       }
     }
   );

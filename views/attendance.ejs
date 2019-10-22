@@ -59,6 +59,7 @@
     <li class="list-group-item list-group-item-action">
       <form class="" action="/deleteAttendedMeeting" method="post"
         onsubmit="return confirm('Delete attendance at meeting?');">
+        <input type="hidden" name="attendeeId" value="<%= user._id %>"></input>
         <span class="name"><%= meeting.title %></span>
         <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
             name="meetingCode" value=<%= meeting.code %> > Delete

@@ -9,15 +9,42 @@
 <br />
 <h3>Attendees</h3>
 <div class="list-group">
+  <li class="list-group-item row-form">
+      <div class="attribute-container names">
+        <div class="name"><strong>Name</strong></div>
+        <div><strong>Preferred Email</strong></div>
+      </div>
+      <div class="attribute-container numbers">
+        <div><strong>Birth Date</strong></div>
+        <div><strong>School ID</strong></div>
+      </div>
+      <div class="attribute-container numbers">
+        <div><strong>Cell</strong></div>
+        <div><strong>Remove?</strong></div>
+    </div>
+  </li>
   <% meetingData.attendees.forEach(function(attendee) { %>
     <li class="list-group-item list-group-item-action">
-      <form class="" action="/deleteAttendedMeeting" method="post"
+      <form class="row-form" action="/deleteAttendedMeeting" method="post"
         onsubmit="return confirm('Delete attendance at meeting?');">
-        <span class="name"><%= attendee.username %></span>
-        <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
-            name="meetingCode" value=<%= meetingData.code %> > Delete
-          <span class="glyphicon glyphicon-remove"></span>
-        </button>
+        <input type="hidden" name="attendeeId" value=<%= attendee._id %> />
+        <div class="attribute-container names">
+          <div class="name"><%= attendee.lastName %>, <%= attendee.firstName %></div>
+          <div><%= attendee.preferredEmail %></div>
+        </div>
+        <div class="attribute-container numbers">
+          <div><%= attendee.birthDate %></div>
+          <div><%= attendee.schoolId %></div>
+        </div>
+        <div class="attribute-container numbers">
+          <div><%= attendee.cellPhone %></div>
+          <div>
+            <button type="submit" class="btn btn-danger btn-xs pull-right remove-item"
+                name="meetingCode" value=<%= meetingData.code %> > Delete
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </div>
+        </div>
       </form>
     </li>
   <% }); %>

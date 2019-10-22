@@ -7,7 +7,7 @@ body {
 
 #attendance, #meetingDetails, #profile {
   margin: 0 auto;
-  max-width: 50em;
+  max-width: 60em;
   padding: 2em 0.5em;
 }
 
@@ -18,6 +18,26 @@ h1, h2, h3, h4, h5, h6, strong {
 
 #meetingDetails h4 {
   color: #3d84a8;
+}
+
+#meetingDetails .row-form {
+  display: grid;
+  grid-template-columns: 12fr 5fr 5fr;
+  text-align: left;
+}
+
+#meetingDetails .attribute-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--column-width-min), 1fr));
+}
+
+@media screen and (min-width: 737px) {
+  #meetingDetails .names {
+      --column-width-min: 14em;
+  }
+  #meetingDetails .numbers {
+      --column-width-min: 6em;
+  }
 }
 
 h2 {
