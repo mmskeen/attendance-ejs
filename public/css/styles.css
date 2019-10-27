@@ -5,7 +5,7 @@ body {
   color: #566b78; /* #555; */
 }
 
-#attendance, #meetingDetails, #profile {
+#dashboard, #meetingDetails, #profile {
   margin: 0 auto;
   max-width: 60em;
   padding: 2em 0.5em;
@@ -41,8 +41,10 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 h2 {
-  margin-top: 0.5em;
-  padding-top: 0.5em;
+  margin-top: 0.15em;
+  padding-top: 0.15em;
+  font-weight: 500;
+  font-size: 1.5em;
 }
 
 h3 {
@@ -71,6 +73,11 @@ a {
   padding: 7% 15%;
 }
 
+#login .container-fluid, #register .container-fluid {
+    padding: 3% 15% 0%;
+    text-align: center;
+}
+
 /* Sections  */
 
 .colored-section {
@@ -85,7 +92,7 @@ a {
 /* Navigation Bar */
 
 .navbar {
-  padding: 0 0 2.5rem; /* was 4.5 */
+  padding: 0 0 1.5rem; /* was 4.5 */
 }
 
 .navbar-brand {
@@ -104,6 +111,11 @@ a {
   font-weight: 100;
 }
 
+#dashboard .dashboard, #login .login, #register .register, #profile .profile {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
 /* Title Section */
 
 #title .container-fluid {
@@ -112,10 +124,12 @@ a {
 }
 
 .title-image {
-  transform: rotate(25deg);
-  width: 60%;
+  transform: rotate(15deg);
+  width: 55%;
   position: absolute;
   right: 30%;
+  margin-left: 1rem;
+  margin-top: 1.5rem;
 }
 
 /* Download Buttons */

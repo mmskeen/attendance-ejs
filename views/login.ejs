@@ -1,48 +1,56 @@
-<%- include('partials/header') %>
+<%- include("partials/header") %>
 
-<div class="container mt-5">
-  <h1>Login</h1>
+<body id="login">
+  <section class="container-fluid colored-section pb-5">
+    <%- include("partials/navbar-loggedOut") %>
 
-  <div class="row">
-    <div class="col-sm-8">
-      <div class="card">
-        <div class="card-body">
+    <div class="container mt-3">
+      <div class="col-sm-6 mx-auto">
+        <div class="card">
+          <div class="card-body">
 
-          <!-- Makes POST request to /login route -->
-          <form action="/login" method="POST">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" name="username">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password">
-            </div>
-            <button type="submit" class="btn btn-dark">Login</button>
-          </form>
+            <!-- Makes POST request to /login route -->
+            <form action="/login" method="POST">
+              <div class="form-group">
+                <input type="email" class="form-control" name="username" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-dark">Login</button>
+            </form>
 
+          </div>
+        </div>
+        <div class="card flex-row">
+          <div class="card-body col-sm-6">
+            <a class="btn btn-block btn-social btn-google" href="/auth/google" role="button">
+              <i class="fab fa-google"></i>
+              Google
+            </a>
+          </div>
+          <div class="card-body col-sm-6">
+            <a class="btn btn-block btn-social btn-facebook" href="/auth/facebook" role="button">
+              <i class="fab fa-facebook"></i>
+              Facebook
+            </a>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="col-sm-4">
-      <div class="card">
-        <div class="card-body">
-          <a class="btn btn-block btn-social btn-google" href="/auth/google" role="button">
-            <i class="fab fa-google"></i>
-            Sign In with Google
-          </a>
-        </div>
-        <div class="card-body">
-          <a class="btn btn-block btn-social btn-facebook" href="/auth/facebook" role="button">
-            <i class="fab fa-facebook"></i>
-            Sign In with Facebook
-          </a>
-        </div>
-      </div>
+  <!-- Footer -->
+
+  <footer id="footer" class="white-section">
+    <div class="container-fluid">
+      <i class="fab fa-twitter contact-icon"></i>
+      <i class="fab fa-facebook contact-icon"></i>
+      <i class="fab fa-instagram contact-icon"></i>
+      <i class="fas fa-envelope contact-icon"></i>
+      <p class="copyright">© Copyright 2019 Attending</p>
     </div>
+  </footer>
 
-  </div>
-</div>
 
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>

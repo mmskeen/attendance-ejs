@@ -1,12 +1,12 @@
 <%- include("partials/header") %>
-<%- include("partials/navbar-loggedIn") %>
-<body id="attendance">
+<body id="dashboard">
+  <%- include("partials/navbar-loggedIn") %>
 
   <!-- Features -->
-  <div class="container mt-5">
+  <h2>Dashboard</h2>
+  <div class="container mt-4">
     <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
+      <div class="col-sm-7 mx-auto">
         <div class="card">
           <div class="card-body colored-section">
 
@@ -24,14 +24,12 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-2"></div>
     </div>
   </div>
 
   <div class="container mt-5">
     <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
+      <div class="col-sm-7 mx-auto">
         <div class="card">
           <div class="card-body">
 
@@ -49,12 +47,12 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-2"></div>
     </div>
   </div>
 
 <br />
-<h2>Meetings Attended</h2>
+<h3>Meetings Attended</h3>
+<div class="list-group mx-5">
   <% attendedMeetings.forEach(function(meeting) { %>
     <li class="list-group-item list-group-item-action">
       <form class="" action="/deleteAttendedMeeting" method="post"
@@ -68,10 +66,11 @@
       </form>
     </li>
   <% }); %>
+</div>
 
 <br />
-<h2>Meetings Hosted</h2>
-<div class="list-group">
+<h3>Meetings Hosted</h3>
+<div class="list-group mx-5">
   <% hostedMeetings.forEach(function(meeting) { %>
     <li class="list-group-item list-group-item-action">
       <form class="" action="/deleteHostedMeeting" method="post"
