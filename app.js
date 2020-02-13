@@ -7,13 +7,16 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const findOrCreate = require("mongoose-findorcreate");
 const request = require("request");
+const db = require('./models');
+const apiMeetingRoutes = require('./routes/meetings'),
+  apiUserRoutes = require('./routes/users');
+const baseURL = "http://localhost:3000";
 
 const app = express();
+
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -26,39 +29,20 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/api/meetings', apiMeetingRoutes);
+app.use('/api/users', apiUserRoutes);
 
-mongoose.connect("mongodb://localhost:27017/attendanceDB", {
-  useNewUrlParser: true
-});
-mongoose.set('useCreateIndex', true);
 
-const userSchema = new mongoose.Schema({
-  email: String,
-  username: String,
-  password: String,
-  googleId: String,
-  facebookId: String,
-  firstName: String,
-  lastName: String,
-  preferredEmail: String,
-  cellPhone: String,
-  birthDate: String,
-  schoolId: String
-});
 
-userSchema.plugin(passportLocalMongoose);
-userSchema.plugin(findOrCreate);
 
-const User = mongoose.model("User", userSchema);
-
-passport.use(User.createStrategy());
+passport.use(db.User.createStrategy());
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  db.User.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -66,11 +50,11 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/attendance"
+    callbackURL: (baseURL + "/auth/google/attendance")
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    User.findOrCreate({ googleId: profile.id }, function(err, user) {
+    db.User.findOrCreate({ googleId: profile.id }, function(err, user) {
       return cb(err, user);
     });
   }
@@ -79,10 +63,10 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/attendance"
+    callbackURL: (baseURL + "/auth/facebook/attendance")
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, function(err, user) {
+    db.User.findOrCreate({ facebookId: profile.id }, function(err, user) {
       return cb(err, user);
     });
   }
@@ -128,12 +112,12 @@ app.get("/logout", function(req, res) {
 app.get("/attendance", function(req, res) {
   if (req.isAuthenticated()) {
     console.log(req.user._id);
-    request("http://localhost:3001/users/" + req.user._id + "/meetingsAttended", function (error, response, body) {
+    request(baseURL + "/api/users/" + req.user._id + "/meetingsAttended", function (error, response, body) {
       console.log('error: ', error); // Print the error if one occurred
       console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
       console.log('body: ', body); // Print the HTML for the attended meetings response.
       const attendedMeetings = JSON.parse(body);
-      request("http://localhost:3001/users/" + req.user._id + "/meetingsHosted", function (error2, response2, body2) {
+      request(baseURL + "/api/users/" + req.user._id + "/meetingsHosted", function (error2, response2, body2) {
         console.log('error2: ', error2); // Print the error if one occurred
         console.log('statusCode2: ', response2 && response2.statusCode); // Print the response status code if a response was received
         console.log('body2: ', body2); // Print the HTML for the Google homepage.
@@ -150,7 +134,7 @@ app.get("/attendance", function(req, res) {
 app.get("/meeting", function(req, res) {
   if (req.isAuthenticated()) {
     console.log();
-    request("http://localhost:3001/meetings/" + req.query.id, function(error, response, body) {
+    request(baseURL + "/api/meetings/" + req.query.id, function(error, response, body) {
       console.log('error: ', error); // Print the error if one occurred
       console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
       console.log('body: ', body); // Print the HTML for the attendees response.
@@ -190,7 +174,7 @@ app.post("/hostMeeting", function(req, res) {
   console.log(mongoose.Types.ObjectId.isValid(meetingData.host));
   request.post(
     {
-      url: "http://localhost:3001/meetings",
+      url: baseURL + "/api/meetings",
       form: meetingData
     },
     function (err, httpResponse, body) {
@@ -211,7 +195,7 @@ app.post("/attendMeeting", function(req, res) {
   };
   request.post(
     {
-      url: "http://localhost:3001/users/" + req.user._id + "/attendEvent",
+      url: baseURL + "/api/users/" + req.user._id + "/attendEvent",
       form: attendData
     },
     function(err, httpResponse, body) {
@@ -232,7 +216,7 @@ app.post("/deleteAttendedMeeting", function(req, res) {
   };
   request.delete(
     {
-      url: "http://localhost:3001/users/" + req.body.attendeeId + "/attendEvent",
+      url: baseURL + "/api/users/" + req.body.attendeeId + "/attendEvent",
       form: attendData
     },
     function(err, httpResponse, body) {
@@ -250,7 +234,7 @@ app.post("/deleteHostedMeeting", function(req, res) {
   console.log(req.body);
   request.delete(
     {
-      url: "http://localhost:3001/meetings/" + req.body.meetingId,
+      url: baseURL + "/api/meetings/" + req.body.meetingId,
     },
     function(err, httpResponse, body) {
       if (err) {
@@ -278,7 +262,7 @@ app.post("/saveProfile", function(req, res) {
   console.log(profileData);
   request.patch(
     {
-      url: "http://localhost:3001/users/" + req.user._id,
+      url: baseURL + "/api/users/" + req.user._id,
       form: profileData
     },
     function(err, httpResponse, body) {
@@ -293,7 +277,7 @@ app.post("/saveProfile", function(req, res) {
 });
 
 app.post("/register", function(req, res) {
-  User.register({username: req.body.username}, req.body.password, function(err, result) {
+  db.User.register({username: req.body.username}, req.body.password, function(err, result) {
     if (err) {
       console.log(err);
       res.redirect("/register");
@@ -306,7 +290,7 @@ app.post("/register", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
-  const user = new User({
+  const user = new db.User({
     username: req.body.username,
     password: req.body.password
   });
@@ -331,10 +315,7 @@ app.post("/attendedMeetings", function(req, res) {
 
 })
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3000;
-}
+let port = process.env.PORT || 3000;
 app.listen(port, function() {
-  console.log("Server started");
+  console.log(`Server started on port ${port}.`);
 });

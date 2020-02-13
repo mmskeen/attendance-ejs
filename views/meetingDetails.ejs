@@ -5,7 +5,7 @@
 <h2>Meeting Details</h2>
 <h3><%= "Title: " + meetingData.title %></h3>
 <h4><%= "Code: " + meetingData.code %></h3>
-<h4><%= "Host: " + meetingData.host.username %></h3>
+<h4><%= "Host: " + (meetingData.host.username ? meetingData.host.username : meetingData.host.preferredEmail) %></h3>
 <br />
 <h3>Attendees</h3>
 <div class="list-group">
