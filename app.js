@@ -37,42 +37,42 @@ app.use('/api/users', apiUserRoutes);
 
 passport.use(db.User.createStrategy());
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  db.User.findById(id, function(err, user) {
+passport.deserializeUser(function (id, done) {
+  db.User.findById(id, function (err, user) {
     done(err, user);
   });
 });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: (baseURL + "/auth/google/attendance")
-  },
-  function(accessToken, refreshToken, profile, cb) {
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: (baseURL + "/auth/google/attendance")
+},
+  function (accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    db.User.findOrCreate({ googleId: profile.id }, function(err, user) {
+    db.User.findOrCreate({ email: profile.email }, { googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
   }
 ));
 
 passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_SECRET,
-    callbackURL: (baseURL + "/auth/facebook/attendance")
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    db.User.findOrCreate({ facebookId: profile.id }, function(err, user) {
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_SECRET,
+  callbackURL: (baseURL + "/auth/facebook/attendance")
+},
+  function (accessToken, refreshToken, profile, cb) {
+    db.User.findOrCreate({ email: profile.email }, { facebookId: profile.id }, function (err, user) {
       return cb(err, user);
     });
   }
 ));
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.render("home");
 });
 
@@ -81,7 +81,7 @@ app.get("/auth/google",
 
 app.get("/auth/google/attendance",
   passport.authenticate("google", { failureRedirect: "/login" }),
-  function(req, res) {
+  function (req, res) {
     // Successful authentication, redirect attendance.
     res.redirect("/attendance");
   });
@@ -91,25 +91,25 @@ app.get("/auth/facebook",
 
 app.get("/auth/facebook/attendance",
   passport.authenticate("facebook", { failureRedirect: "/login" }),
-  function(req, res) {
+  function (req, res) {
     // Successful authentication, redirect attendance.
     res.redirect("/attendance");
   });
 
-app.get("/register", function(req, res) {
+app.get("/register", function (req, res) {
   res.render("register");
 });
 
-app.get("/login", function(req, res) {
+app.get("/login", function (req, res) {
   res.render("login");
 });
 
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
 
-app.get("/attendance", function(req, res) {
+app.get("/attendance", function (req, res) {
   if (req.isAuthenticated()) {
     console.log(req.user._id);
     request(baseURL + "/api/users/" + req.user._id + "/meetingsAttended", function (error, response, body) {
@@ -123,7 +123,7 @@ app.get("/attendance", function(req, res) {
         console.log('body2: ', body2); // Print the HTML for the Google homepage.
         const hostedMeetings = JSON.parse(body2);
 
-        res.render("attendance", {user: req.user, attendedMeetings: attendedMeetings, hostedMeetings: hostedMeetings});
+        res.render("attendance", { user: req.user, attendedMeetings: attendedMeetings, hostedMeetings: hostedMeetings });
       });
     });
   } else {
@@ -131,39 +131,39 @@ app.get("/attendance", function(req, res) {
   }
 });
 
-app.get("/meeting", function(req, res) {
+app.get("/meeting", function (req, res) {
   if (req.isAuthenticated()) {
     console.log();
-    request(baseURL + "/api/meetings/" + req.query.id, function(error, response, body) {
+    request(baseURL + "/api/meetings/" + req.query.id, function (error, response, body) {
       console.log('error: ', error); // Print the error if one occurred
       console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
       console.log('body: ', body); // Print the HTML for the attendees response.
       const meetingData = JSON.parse(body);
       // res.send(meetingData);
-      res.render("meetingDetails", {meetingData: meetingData});
+      res.render("meetingDetails", { meetingData: meetingData });
     });
   } else {
     res.redirect("/login");
   }
 });
 
-app.get("/profile", function(req, res) {
+app.get("/profile", function (req, res) {
   if (req.isAuthenticated()) {
-    res.render("profile", {user: req.user});
+    res.render("profile", { user: req.user });
   } else {
     res.redirect("/login");
   }
 });
 
-app.get("/profile-edit", function(req, res) {
+app.get("/profile-edit", function (req, res) {
   if (req.isAuthenticated()) {
-    res.render("profile-edit", {user: req.user});
+    res.render("profile-edit", { user: req.user });
   } else {
     res.redirect("/login");
   }
 });
 
-app.post("/hostMeeting", function(req, res) {
+app.post("/hostMeeting", function (req, res) {
   console.log(req.user);
   const meetingData = {
     title: req.body.meetingDescription,
@@ -189,7 +189,7 @@ app.post("/hostMeeting", function(req, res) {
   );
 });
 
-app.post("/attendMeeting", function(req, res) {
+app.post("/attendMeeting", function (req, res) {
   const attendData = {
     code: req.body.meetingCode
   };
@@ -198,7 +198,7 @@ app.post("/attendMeeting", function(req, res) {
       url: baseURL + "/api/users/" + req.user._id + "/attendEvent",
       form: attendData
     },
-    function(err, httpResponse, body) {
+    function (err, httpResponse, body) {
       if (err) {
         res.json({ success: false, error: err });
       } else {
@@ -209,7 +209,7 @@ app.post("/attendMeeting", function(req, res) {
   );
 });
 
-app.post("/deleteAttendedMeeting", function(req, res) {
+app.post("/deleteAttendedMeeting", function (req, res) {
   console.log(req.body);
   const attendData = {
     meetingCode: req.body.meetingCode
@@ -219,7 +219,7 @@ app.post("/deleteAttendedMeeting", function(req, res) {
       url: baseURL + "/api/users/" + req.body.attendeeId + "/attendEvent",
       form: attendData
     },
-    function(err, httpResponse, body) {
+    function (err, httpResponse, body) {
       if (err) {
         res.json({ success: false, error: err });
       } else {
@@ -230,13 +230,13 @@ app.post("/deleteAttendedMeeting", function(req, res) {
   );
 });
 
-app.post("/deleteHostedMeeting", function(req, res) {
+app.post("/deleteHostedMeeting", function (req, res) {
   console.log(req.body);
   request.delete(
     {
       url: baseURL + "/api/meetings/" + req.body.meetingId,
     },
-    function(err, httpResponse, body) {
+    function (err, httpResponse, body) {
       if (err) {
         res.json({ success: false, error: err });
       } else {
@@ -247,7 +247,7 @@ app.post("/deleteHostedMeeting", function(req, res) {
   );
 });
 
-app.post("/saveProfile", function(req, res) {
+app.post("/saveProfile", function (req, res) {
   const profileData = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -265,7 +265,7 @@ app.post("/saveProfile", function(req, res) {
       url: baseURL + "/api/users/" + req.user._id,
       form: profileData
     },
-    function(err, httpResponse, body) {
+    function (err, httpResponse, body) {
       if (err) {
         res.json({ success: false, error: err });
       } else {
@@ -276,46 +276,46 @@ app.post("/saveProfile", function(req, res) {
   );
 });
 
-app.post("/register", function(req, res) {
-  db.User.register({username: req.body.username}, req.body.password, function(err, result) {
+app.post("/register", function (req, res) {
+  db.User.findOrCreate({ email: req.body.username }, { password: req.body.password }, function (err, result) {
     if (err) {
       console.log(err);
       res.redirect("/register");
     } else {
-      passport.authenticate("local")(req, res, function() {
+      passport.authenticate("local")(req, res, function () {
         res.redirect("/attendance");
       });
     }
   });
 });
 
-app.post("/login", function(req, res) {
+app.post("/login", function (req, res) {
   const user = new db.User({
-    username: req.body.username,
+    email: req.body.username,
     password: req.body.password
   });
   console.log(user);
-  req.login(user, function(err) {
+  req.login(user, function (err) {
     if (err) {
       console.log(err);
     } else {
-      passport.authenticate("local")(req, res, function() {
+      passport.authenticate("local")(req, res, function () {
         res.redirect("/attendance");
       });
     }
   });
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });
 
-app.post("/attendedMeetings", function(req, res) {
+app.post("/attendedMeetings", function (req, res) {
 
 })
 
 let port = process.env.PORT || 3000;
-app.listen(port, function() {
+app.listen(port, function () {
   console.log(`Server started on port ${port}.`);
 });
